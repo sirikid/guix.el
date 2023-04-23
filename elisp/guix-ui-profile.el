@@ -26,7 +26,6 @@
 
 ;;; Code:
 
-(require 'dash)
 (require 'bui)
 (require 'guix nil t)
 (require 'guix-profiles)
@@ -55,15 +54,17 @@ properly.")
   "Return a list of all profiles."
   (or guix-profiles
       (setq guix-profiles
-            (--filter
-             (and it (file-exists-p it))
+            (seq-filter
+             (lambda (it)
+               (and it (file-exists-p it)))
              (delete-dups
-              (-cons* guix-default-user-profile
-                      guix-default-pulled-profile
-                      guix-system-profile
-                      (--when-let (getenv "GUIX_PROFILE")
-                        (guix-file-name it))
-                      (guix-eval-read "(user-profiles)")))))))
+              (cl-list* guix-default-user-profile
+                        guix-default-pulled-profile
+                        guix-system-profile
+                        (let ((it (getenv "GUIX_PROFILE")))
+                          (when it
+                            (guix-file-name it)))
+                        (guix-eval-read "(user-profiles)")))))))
 
 (defun guix-profile->entry (profile)
   "Return 'guix-profile' entry by PROFILE file-name."
@@ -103,8 +104,9 @@ are multiple entries, prompt for a profile name and return it."
   (or entries (setq entries (bui-current-entries)))
   (if (cdr entries)
       (completing-read "Profile: "
-                       (--map (bui-entry-value it 'profile)
-                              entries))
+                       (mapcar (lambda (it)
+                                 (bui-entry-value it 'profile))
+                               entries))
     (bui-entry-value (car entries) 'profile)))
 
 
@@ -202,8 +204,7 @@ If nothing is marked, use profile on the current line."
                        (lambda (entry)
                          (let ((id (bui-entry-id entry)))
                            (cons `(current . ,(equal id current-id))
-                                 (--remove-first (eq (car it) 'current)
-                                                 entry))))
+                                 (assq-delete-all 'current entry))))
                        (bui-current-entries))))
     (setf (bui-item-entries bui-item)
           new-entries))

@@ -48,7 +48,6 @@
 
 ;;; Code:
 
-(require 'dash)
 (require 'geiser-mode)
 (require 'geiser-guile)
 (require 'guix nil t)
@@ -210,8 +209,8 @@ After setting this variable, you need to kill
                   (lcp (if guix-load-compiled-path
                            (guix-list-maybe guix-load-compiled-path)
                          lp)))
-             (append (--mapcat (list "-L" (guix-file-name it)) lp)
-                     (--mapcat (list "-C" (guix-file-name it)) lcp))))
+             (append (mapcan (lambda (it) (list "-L" (guix-file-name it))) lp)
+                     (mapcan (lambda (it) (list "-C" (guix-file-name it))) lcp))))
     "-L" ,guix-scheme-directory
     ,@(and guix-config-scheme-compiled-directory
            (list "-C" guix-config-scheme-compiled-directory))
@@ -224,8 +223,9 @@ After setting this variable, you need to kill
                  (list "-L" scm-dir
                        "-C" (or go-dir scm-dir)))
              ;; For backward compatibility.
-             (--when-let (guix-latest-directory)
-               (list "-L" it "-C" it))))
+             (let ((it (guix-latest-directory)))
+               (when it
+                 (list "-L" it "-C" it)))))
     ,@(and guix-config-guix-scheme-directory
            (list "-L" guix-config-guix-scheme-directory
                  "-C" (or guix-config-guix-scheme-compiled-directory
@@ -328,7 +328,9 @@ this address (it should be defined by
                geiser-guile--debugger-prompt-regexp))
         (geiser-repl--startup impl address)
         (geiser-repl--autodoc-mode 1)
-        (geiser-company--setup geiser-repl-company-p)
+        (when (fboundp 'geiser-company--setup)
+          (defvar geiser-repl-company-p)
+          (geiser-company--setup geiser-repl-company-p))
         (add-hook 'comint-output-filter-functions
                   'guix-repl-output-filter
                   nil t)
@@ -513,8 +515,9 @@ If MODES is nil, use modes for Guix package management."
 (defun guix-operation-buffers (&optional modes)
   "Return a list of all buffers with major modes derived from MODES.
 If MODES is nil, return list of all Guix 'list' and 'info' buffers."
-  (--filter (guix-operation-buffer? it modes)
-            (buffer-list)))
+  (seq-filter (lambda (it)
+                (guix-operation-buffer? it modes))
+              (buffer-list)))
 
 (defun guix-update-buffers-after-operation ()
   "Update buffers after Guix operation if needed.

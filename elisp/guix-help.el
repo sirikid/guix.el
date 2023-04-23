@@ -23,7 +23,6 @@
 
 ;;; Code:
 
-(require 'dash)
 (require 'bui)
 (require 'guix nil t)
 (require 'guix-utils)
@@ -381,7 +380,7 @@ This is a wrapper for `guix-define-buffer-function'."
 
 (defun guix-buffers ()
   "Return all Guix buffers matching `guix-define-buffer-function'."
-  (-filter #'guix-buffer? (buffer-list)))
+  (seq-filter #'guix-buffer? (buffer-list)))
 
 ;;;###autoload
 (defun guix-switch-to-buffer (buffer)

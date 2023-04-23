@@ -25,7 +25,6 @@
 ;;; Code:
 
 (require 'cl-lib)
-(require 'dash)
 (require 'bui)
 (require 'guix nil t)
 (require 'guix-ui)
@@ -102,14 +101,17 @@ is found and `guix-package-list-show-single' is nil."
 
 (defun guix-package-entry-installed-outputs (entry)
   "Return a list of installed outputs for the package ENTRY."
-  (--map (bui-entry-non-void-value it 'output)
-         (bui-entry-non-void-value entry 'installed)))
+  (mapcar (lambda (it)
+            (bui-entry-non-void-value it 'output))
+          (bui-entry-non-void-value entry 'installed)))
 
 (defun guix-read-package-name-from-entries (entries)
   "Prompt for a package name and return it.
 Names are completed from package ENTRIES."
   (completing-read "Package: "
-                   (--map (bui-entry-value it 'name) entries)))
+                   (mapcar (lambda (it)
+                             (bui-entry-value it 'name))
+                           entries)))
 
 (defun guix-read-package-entry-by-name (&optional entries)
   "Return an entry from package ENTRIES (current entries by default).
@@ -223,20 +225,23 @@ If Guix REPL was restarted, the data is not up-to-date.")
   "Return short package descriptions for performing package actions.
 See `guix-process-package-actions' for the meaning of SPECS.
 ENTRIES is a list of package entries to get info about packages."
-  (-non-nil
-   (-map (-lambda ((id . outputs))
-           (--when-let (bui-entry-by-id entries id)
-             (let ((location (bui-entry-non-void-value it 'location))
-                   (name (guix-package-entry->name-specification it)))
-               (with-temp-buffer
-                 (insert name)
-                 (when outputs
-                   (insert ":" (guix-concat-strings outputs ",")))
-                 (when location
-                   (indent-to guix-package-name-width 2)
-                   (insert "(" location ")"))
-                 (buffer-string)))))
-         specs)))
+  (remq
+   nil
+   (mapcar (cl-function
+            (lambda ((id . outputs))
+              (let ((it (bui-entry-by-id entries id)))
+                (when it
+                  (let ((location (bui-entry-non-void-value it 'location))
+                        (name (guix-package-entry->name-specification it)))
+                    (with-temp-buffer
+                      (insert name)
+                      (when outputs
+                        (insert ":" (guix-concat-strings outputs ",")))
+                      (when location
+                        (indent-to guix-package-name-width 2)
+                        (insert "(" location ")"))
+                      (buffer-string)))))))
+           specs)))
 
 (defun guix-insert-package-strings (strings action)
   "Insert information STRINGS at point for performing package ACTION."
@@ -625,9 +630,10 @@ or (id spec) list."
            (guix-package-info-insert-non-unique-text
             (guix-package-entry->name-specification entry))
            (bui-newline))
-         (--when-let (bui-entry-non-void-value entry 'superseded)
-           (guix-package-info-insert-superseded-text it)
-           (bui-newline)))
+         (let ((it (bui-entry-non-void-value entry 'superseded)))
+           (when it
+             (guix-package-info-insert-superseded-text it)
+             (bui-newline))))
         (obsolete (guix-package-info-insert-obsolete-text name))
         (unknown  (guix-package-info-insert-unknown-text name))
         (future   (guix-package-info-insert-future-text name))
@@ -698,9 +704,10 @@ current OUTPUT is installed (if there is such output in
   (let* ((installed (bui-entry-non-void-value entry 'installed))
          (obsolete  (eq (bui-entry-non-void-value entry 'known-status)
                         'obsolete))
-         (installed-entry (--find
-                           (string= (bui-entry-non-void-value it 'output)
-                                    output)
+         (installed-entry (seq-find
+                           (lambda (it)
+                             (string= (bui-entry-non-void-value it 'output)
+                                      output))
                            installed))
          (action-type (if installed-entry 'delete 'install))
          (profile (guix-ui-current-profile)))
@@ -1160,8 +1167,9 @@ Colorize it with an appropriate face if needed."
 (defun guix-package-list-get-installed-outputs (installed &optional _)
   "Return string with outputs from INSTALLED entries."
   (bui-get-string
-   (--map (bui-entry-non-void-value it 'output)
-          installed)))
+   (mapcar (lambda (it)
+             (bui-entry-non-void-value it 'output))
+           installed)))
 
 (defun guix-package-list-marking-check ()
   "Signal an error if marking is disabled for the current buffer."
@@ -1238,16 +1246,18 @@ Use FUN to perform marking of the current line.  FUN should
 take an entry as argument.
 If ALL is non-nil, mark all installed (not only obsolete) packages."
   (guix-package-list-marking-check)
-  (let ((entries (--filter (if all
-                               (bui-entry-non-void-value it 'installed)
-                             (eq (bui-entry-non-void-value it 'known-status)
-                                 'obsolete))
-                           (bui-current-entries))))
+  (let ((entries (seq-filter (lambda (it)
+                               (if all
+                                   (bui-entry-non-void-value it 'installed)
+                                 (eq (bui-entry-non-void-value it 'known-status)
+                                     'obsolete)))
+                             (bui-current-entries))))
     (bui-list-for-each-line
      (lambda ()
        (let* ((id (bui-list-current-id))
-              (entry (--find (equal id (bui-entry-id it))
-                             entries)))
+              (entry (seq-find (lambda (it)
+                                 (equal id (bui-entry-id it)))
+                               entries)))
          (when entry
            (funcall fun entry)))))))
 
@@ -1265,15 +1275,16 @@ With ARG, mark all installed (including non-obsolete) packages."
 (defun guix-package-assert-non-system-profile ()
   "Verify that the current profile is not a system one.
 The current profile is the one used by the current buffer."
-  (--when-let (guix-ui-current-profile)
-    (guix-assert-non-system-profile it)))
+  (let ((it (guix-ui-current-profile)))
+    (when it
+      (guix-assert-non-system-profile it))))
 
 (defun guix-package-execute-actions (fun)
   "Perform actions on the marked packages.
 Use FUN to define actions suitable for `guix-process-package-actions'.
 FUN should take action-type as argument."
   (guix-package-assert-non-system-profile)
-  (let ((actions (-non-nil (mapcar fun '(install delete upgrade)))))
+  (let ((actions (remq nil (mapcar fun '(install delete upgrade)))))
     (if actions
         (guix-process-package-actions (guix-ui-current-profile)
                                       actions (current-buffer))
@@ -1460,8 +1471,9 @@ The specification is suitable for `guix-process-output-actions'."
 
 (defun guix-output-list-describe (&rest ids)
   "Describe outputs with IDS (list of output identifiers)."
-  (let ((pids (--map (car (guix-package-id-and-output-by-output-id it))
-                     ids)))
+  (let ((pids (mapcar (lambda (it)
+                        (car (guix-package-id-and-output-by-output-id it)))
+                      ids)))
     (bui-get-display-entries
      'guix-package 'info
      (cl-list* (guix-ui-current-profile)

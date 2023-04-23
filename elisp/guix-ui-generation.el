@@ -25,7 +25,6 @@
 ;;; Code:
 
 (require 'cl-lib)
-(require 'dash)
 (require 'bui)
 (require 'guix nil t)
 (require 'guix-ui)
@@ -516,8 +515,9 @@ Use the full PROFILE file name."
     (setq buffer-read-only nil
           indent-tabs-mode nil)
     (erase-buffer)
-    (mapc (-lambda ((name file-name))
-            (guix-generation-insert-package name file-name))
+    (mapc (cl-function
+           (lambda ((name file-name))
+             (guix-generation-insert-package name file-name)))
           (guix-generation-packages profile))))
 
 (defun guix-generation-packages-buffer (profile generation)

@@ -28,10 +28,6 @@ if GEISER_DIR
   AM_ELCFLAGS += -L "$(geiserlispdir)"
 endif
 
-if DASH_DIR
-  AM_ELCFLAGS += -L "$(dashlispdir)"
-endif
-
 if BUI_DIR
   AM_ELCFLAGS += -L "$(builispdir)"
 endif

@@ -176,10 +176,6 @@ from the Guix Guile code.  So without Geiser, you can use the same
 features as without Guix.
 
 @item
-@uref{https://github.com/magnars/dash.el, dash library}, version
-2.11.0 or later.
-
-@item
 @uref{https://gitlab.com/alezost-emacs/bui, BUI library}, version
 1.2.0 or later.  It is used to define various ``list''/``info''
 interfaces (to display packages, generations, licenses, etc.).

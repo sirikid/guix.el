@@ -24,7 +24,6 @@
 ;;; Code:
 
 (require 'cl-lib)
-(require 'dash)
 (require 'bui-utils)
 (require 'guix nil t)
 
@@ -242,8 +241,9 @@ modifier call."
 (defun guix-modify-objects (objects &rest modifiers)
   "Apply MODIFIERS to each object from a list of OBJECTS.
 See `guix-modify' for details."
-  (--map (apply #'guix-modify it modifiers)
-         objects))
+  (mapcar (lambda (it)
+            (apply #'guix-modify it modifiers))
+          objects))
 
 (defun guix-make-symbol (&rest symbols)
   "Return `guix-SYMBOLS-...' symbol."

@@ -26,7 +26,6 @@
 
 (require 'cl-lib)
 (require 'ffap)
-(require 'dash)
 (require 'bui)
 (require 'guix-package)
 (require 'guix-guile)
@@ -114,9 +113,10 @@ SEARCH-TYPE may be one of the following symbols: `id', `live',
                 (if guix-store-item-show-total-size
                     (apply #'message
                            (concat str "\nTotal size: %s.")
-                           (-snoc args
-                                  (guix-file-size-string
-                                   (guix-store-item-entries-size entries))))
+                           (append args
+                                   (list
+                                    (guix-file-size-string
+                                     (guix-store-item-entries-size entries)))))
                   (apply #'message str args ))))
       (cl-case search-type
         ((id path)
@@ -161,10 +161,13 @@ SEARCH-TYPE may be one of the following symbols: `id', `live',
 
 (defun guix-store-item-entries-size (entries)
   "Return total size of store item ENTRIES."
-  (--reduce-from (+ acc
-                    (or (bui-entry-non-void-value it 'size)
-                        0))
-                 0 entries))
+  (seq-reduce
+   #'+
+   (mapcar (lambda (it)
+             (or (bui-entry-non-void-value it 'size)
+                 0))
+           entries)
+   0))
 
 
 ;;; Store item 'info'
