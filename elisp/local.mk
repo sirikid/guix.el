@@ -118,7 +118,7 @@ $(ELC_FILES): %.elc: %.el
 CLEANFILES += $(ELC_FILES) $(AUTOLOADS)
 
 clean-lisp:
-	-$(RM) -f $(ELC_FILES)
+	-$(RM) $(ELC_FILES)
 
 clean-elc: clean-lisp
 
