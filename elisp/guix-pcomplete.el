@@ -38,7 +38,7 @@
 
 (defun guix-pcomplete-search-in-help (regexp &optional group
                                              &rest args)
-  "Search for REGEXP in 'guix ARGS... --help' output.
+  "Search for REGEXP in `guix ARGS... --help' output.
 Return a list of strings matching REGEXP.
 GROUP specifies a parenthesized expression used in REGEXP."
   (with-temp-buffer
@@ -53,8 +53,8 @@ GROUP specifies a parenthesized expression used in REGEXP."
   "Define function NAME to receive guix options and commands.
 
 The defined function takes rest COMMANDS argument.  This function
-will search for REGEXP in 'guix COMMANDS... --help' output (or
-'guix --help' if COMMANDS is nil) using
+will search for REGEXP in `guix COMMANDS... --help' output (or
+`guix --help' if COMMANDS is nil) using
 `guix-pcomplete-search-in-help' and will return its result.
 
 If FILTER is specified, it should be a function.  The result is
@@ -72,15 +72,15 @@ function call is returned."
 (guix-pcomplete-define-options-finder guix-pcomplete-commands
   "If COMMANDS is nil, return a list of available guix commands.
 If COMMANDS is non-nil (it should be a list of strings), return
-available subcommands, actions, etc. for 'guix COMMANDS'."
+available subcommands, actions, etc. for `guix COMMANDS'."
   guix-help-parse-command-regexp)
 
 (guix-pcomplete-define-options-finder guix-pcomplete-long-options
-  "Return a list of available long options for 'guix COMMANDS'."
+  "Return a list of available long options for `guix COMMANDS'."
   guix-help-parse-long-option-regexp)
 
 (guix-pcomplete-define-options-finder guix-pcomplete-short-options
-  "Return a string with available short options for 'guix COMMANDS'."
+  "Return a string with available short options for `guix COMMANDS'."
   guix-help-parse-short-option-regexp
   (lambda (list)
     (guix-concat-strings list "")))

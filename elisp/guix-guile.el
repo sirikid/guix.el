@@ -105,7 +105,7 @@ PROC and ARGS should be strings."
       (string-match-p geiser-guile--debugger-prompt-regexp string)))
 
 (defun guix-guile-read ()
-  "Read guile code from the current buffer and 'transform' it into elisp.
+  "Read guile code from the current buffer and \\+`transform' it into elisp.
 The contents of the current buffer may be modified."
   (goto-char (point-min))
   (cond
@@ -120,13 +120,13 @@ The contents of the current buffer may be modified."
     (read (current-buffer)))))
 
 (defun guix-guile-read-from-file (file-name)
-  "Read guile code from FILE-NAME and 'transform' it into elisp."
+  "Read guile code from FILE-NAME and \\+`transform' it into elisp."
   (with-temp-buffer
     (insert-file-contents file-name)
     (guix-guile-read)))
 
 (defun guix-guile-read-from-string (string)
-  "Read guile code from string and 'transform' it into elisp."
+  "Read guile code from string and \\+`transform' it into elisp."
   (with-temp-buffer
     (insert string)
     (guix-guile-read)))

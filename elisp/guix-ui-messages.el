@@ -227,7 +227,7 @@ Try \"\\[guix-packages-by-name-regexp]\" to find this package.")
 (defun guix-message-dependent-packages (entries entry-type
                                         depend-type packages)
   "Display a message for packages or outputs searched by PACKAGES.
-DEPEND-TYPE should a symbol `direct' or `all'."
+DEPEND-TYPE should a symbol \\+`direct' or \\+`all'."
   (let* ((count (length entries))
          (str-beg (guix-message-string-entries count entry-type))
          (str-end (concat (if (eq depend-type 'direct)

@@ -59,7 +59,7 @@
   "Directory with Guix compiled (*.go) files.")
 
 (defconst guix-config-guile-program nil
-  "Name of the 'guile' executable defined at configure time.")
+  "Name of the \\+`guile' executable defined at configure time.")
 
 (provide 'guix-default-config)
 

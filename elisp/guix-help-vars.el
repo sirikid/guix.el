@@ -45,7 +45,7 @@
   (rx bol "   "
       (group wordchar (one-or-more (or wordchar "-"))))
   "Regexp used to find guix commands.
-'Command' means any option not prefixed with '-'.  For example,
+Command means any option not prefixed with dash.  For example,
 guix subcommand, system action, importer, etc.")
 
 (defvar guix-help-parse-long-option-regexp
@@ -85,7 +85,7 @@ options.")
 
 (defvar guix-help-refresh-subsets
   '("core" "non-core")
-  "List of supported 'refresh' subsets.")
+  "List of supported \\+`refresh' subsets.")
 
 (defvar guix-help-key-policies
   '("interactive" "always" "never")
@@ -93,7 +93,7 @@ options.")
 
 (defvar guix-help-verify-options
   '("repair" "contents")
-  "List of supported 'verify' options")
+  "List of supported \\+`verify' options.")
 
 (defvar guix-help-elpa-archives
   '("gnu" "melpa" "melpa-stable")
@@ -101,66 +101,66 @@ options.")
 
 (defvar guix-help-size-sort-keys
   '("closure" "self")
-  "List of supported sort keys for 'guix size' command.")
+  "List of supported sort keys for `guix size' command.")
 
 (defvar guix-help-search-paths-types
   '("exact" "prefix" "suffix")
-  "List of supported search-paths types for 'guix package' command.")
+  "List of supported search-paths types for `guix package' command.")
 
 (defvar guix-help-repl-types
   '("guile" "machine")
-  "List of supported types for 'guix repl' command.")
+  "List of supported types for `guix repl' command.")
 
 (defvar guix-help-describe-formats
   '("human" "channels" "json" "recutils")
-  "List of supported formats for 'guix describe' command.")
+  "List of supported formats for `guix describe' command.")
 
 (defvar guix-help-on-error-strategies
   '("nothing-special" "backtrace" "debug")
-  "List of on-error strategies for 'guix system' command.")
+  "List of on-error strategies for `guix system' command.")
 
 
 ;;; Default values of various options
 
 (defvar guix-default-hash-format
   "nix-base32"
-  "Default format for 'guix hash' command.")
+  "Default format for `guix hash' command.")
 
 (defvar guix-default-key-policy
   "interactive"
-  "Default key download policy used by 'guix refresh' command.")
+  "Default key download policy used by `guix refresh' command.")
 
 (defvar guix-default-elpa-archive
   "gnu"
-  "Default ELPA archive for 'guix import elpa' command.")
+  "Default ELPA archive for `guix import elpa' command.")
 
 (defvar guix-default-size-sort-key
   "closure"
-  "Default sort key for 'guix size' command.")
+  "Default sort key for `guix size' command.")
 
 (defvar guix-default-search-paths-type
   "exact"
-  "Default search-paths type for 'guix package' command.")
+  "Default search-paths type for `guix package' command.")
 
 (defvar guix-default-repl-type
   "guile"
-  "Default type for 'guix repl' command.")
+  "Default type for `guix repl' command.")
 
 (defvar guix-default-describe-format
   "human"
-  "Default format for 'guix describe' command.")
+  "Default format for `guix describe' command.")
 
 (defvar guix-default-graph-backend
   "graphviz"
-  "Default backend for 'guix graph' command.")
+  "Default backend for `guix graph' command.")
 
 (defvar guix-default-graph-node-type
   "package"
-  "Default node type for 'guix graph' command.")
+  "Default node type for `guix graph' command.")
 
 (defvar guix-default-on-error-strategy
   "nothing-special"
-  "Default on-error strategy for 'guix system' command.")
+  "Default on-error strategy for `guix system' command.")
 
 (provide 'guix-help-vars)
 

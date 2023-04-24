@@ -38,9 +38,10 @@
   :message-function 'guix-service-message)
 
 (defun guix-service-get-entries (search-type search-values params)
-  "Receive 'service' entries.
-SEARCH-TYPE may be one of the following symbols: `id', `all',
-`name', `regexp', `location', `from-os-file', `from-expression'."
+  "Receive \\+`service' entries.
+SEARCH-TYPE may be one of the following symbols: \\+`id',
+\\+`all', \\+`name', \\+`regexp', \\+`location',
+\\+`from-os-file', \\+`from-expression'."
   (guix-eval-read
    (guix-make-guile-expression
     'service-sexps search-type search-values params)))
@@ -108,7 +109,7 @@ SEARCH-TYPE may be one of the following symbols: `id', `all',
 
 (defface guix-service-info-heading
   '((t :inherit bui-info-heading))
-  "Face used for 'info' buffer heading (service name)."
+  "Face used for \\+`info' buffer heading (service name)."
   :group 'guix-service-info-faces)
 
 (defface guix-service-info-description
@@ -123,7 +124,7 @@ SEARCH-TYPE may be one of the following symbols: `id', `all',
 
 (defvar guix-service-info-required-params
   '(id)
-  "List of the required 'service' parameters.
+  "List of the required \\+`service' parameters.
 These parameters are received from the Scheme side
 along with the displayed parameters.
 
@@ -141,7 +142,7 @@ identifying an entry.")
              'add)))
 
 (defun guix-service-info-get-entries (search-type &rest search-values)
-  "Return 'service' entries for displaying them in 'info' buffer."
+  "Return \\+`service' entries for displaying them in \\+`info' buffer."
   (guix-service-get-entries
    search-type search-values
    (cl-union guix-service-info-required-params
@@ -192,11 +193,11 @@ identifying an entry.")
 
 (defvar guix-service-list-required-params
   '(id)
-  "List of the required 'service' parameters.
+  "List of the required \\+`service' parameters.
 These parameters are received from the Scheme side
 along with the displayed parameters.
 
-Do not remove `id' from this list as it is required for
+Do not remove \\+`id' from this list as it is required for
 identifying an entry.")
 
 (let ((map guix-service-list-mode-map))

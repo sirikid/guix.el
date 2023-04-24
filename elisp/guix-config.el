@@ -55,11 +55,11 @@
        (expand-file-name "scheme" guix-elisp-directory)
        (expand-file-name "../scheme" guix-elisp-directory))
       (progn
-        (message "WARNING: Can't define `guix-scheme-directory'!")
+        (display-warning 'guix (format "Can't define `guix-scheme-directory'!"))
         nil))
   "Directory with Scheme files for Emacs-Guix package.
 It should be a directory where Guile modules are placed, i.e. a
-directory with 'emacs-guix' sub-directory.")
+directory with `emacs-guix' sub-directory.")
 
 (defvar guix-image-directory
   (or guix-config-image-directory

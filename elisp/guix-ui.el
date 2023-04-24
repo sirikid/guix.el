@@ -83,7 +83,7 @@ with all available parameters."
     profile entry-type search-type search-values params)))
 
 (defun guix-ui-list-describe (&rest ids)
-  "Describe 'ui' entries with IDS (list of identifiers)."
+  "Describe \\+`ui' entries with IDS (list of identifiers)."
   (bui-get-display-entries
    (bui-current-entry-type) 'info
    (cl-list* (guix-ui-current-profile) 'id ids)
@@ -200,17 +200,17 @@ Along with the mentioned definitions, this macro also defines:
 
          (defvar ,required-var ,required-val
            ,(format "\
-List of the required '%s' parameters.
+List of the required \\+`%s' parameters.
 These parameters are received from the Scheme side
 along with the displayed parameters.
 
-Do not remove `id' from this list as it is required for
+Do not remove \\+`id' from this list as it is required for
 identifying an entry."
                     entry-type-str))
 
          (defun ,buffer-name-fun (profile &rest _)
            ,(format "\
-Return a name of '%s' buffer for displaying '%s' entries.
+Return a name of \\+`%s' buffer for displaying \\+`%s' entries.
 See `guix-ui-buffer-name' for details."
                     buffer-type-str entry-type-str)
            (guix-ui-buffer-name ,buffer-name-val profile))

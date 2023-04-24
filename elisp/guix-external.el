@@ -38,7 +38,7 @@
         ;; Avoid auto-compilation as it is slow and error-prone:
         ;; <https://notabug.org/alezost/emacs-guix/issues/2>.
         "--no-auto-compile")
-  "Name of the 'guile' executable used for Guix REPL.
+  "Name of the \\+`guile' executable used for Guix REPL.
 May be either a string (the name of the executable) or a list of
 strings of the form:
 
@@ -50,18 +50,18 @@ Where ARGS is a list of arguments to the guile program."
 
 (defcustom guix-dot-program
   (executable-find "dot")
-  "Name of the 'dot' executable."
+  "Name of the \\+`dot' executable."
   :type 'string
   :group 'guix-external)
 
 (defcustom guix-dot-default-arguments
   '("-Tpng")
-  "Default arguments for 'dot' program."
+  "Default arguments for \\+`dot' program."
   :type '(repeat string)
   :group 'guix-external)
 
 (defcustom guix-dot-file-name-function #'guix-png-file-name
-  "Function used to define a file name of a temporary 'dot' file.
+  "Function used to define a file name of a temporary \\+`dot' file.
 The function is called without arguments."
   :type '(choice (function-item guix-png-file-name)
                  (function :tag "Other function"))
@@ -82,11 +82,11 @@ If ARGS is nil, use `guix-dot-default-arguments'."
   (funcall guix-dot-file-name-function))
 
 (defun guix-png-file-name ()
-  "Return '.png' file name in the `guix-temporary-directory'."
+  "Return `.png' file name in the `guix-temporary-directory'."
   (guix-temporary-file-name "graph-" ".png"))
 
 (defun guix-html-file-name ()
-  "Return '.html' file name in the `guix-temporary-directory'."
+  "Return `.html' file name in the `guix-temporary-directory'."
   (guix-temporary-file-name "graph-" ".html"))
 
 (provide 'guix-external)

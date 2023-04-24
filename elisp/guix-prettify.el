@@ -25,7 +25,7 @@
 ;; replaced with '/gnu/store/…-foo-0.1' in the current buffer.  There is
 ;; also `global-guix-prettify-mode' for global prettifying.
 
-;; To install, add the following to your emacs init file:
+;; To install, add the following to your Emacs init file:
 ;;
 ;;   (add-to-list 'load-path "/path/to/dir-with-guix-prettify")
 ;;   (autoload 'guix-prettify-mode "guix-prettify" nil t)
@@ -166,10 +166,10 @@ file names (see `guix-prettify-regexp') are displayed as
 
 This mode can be enabled programmatically using hooks:
 
-  (add-hook 'shell-mode-hook 'guix-prettify-mode)
+  (add-hook \\='shell-mode-hook \\='guix-prettify-mode)
 
 It is possible to enable the mode in any buffer, however not any
-buffer's highlighting may survive after adding new elements to
+buffer\\='s highlighting may survive after adding new elements to
 `font-lock-keywords' (see `guix-prettify-special-modes' for
 details).
 

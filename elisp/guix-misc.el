@@ -163,7 +163,7 @@ Ask a user with PROMPT for continuing an operation."
 ;;;###autoload
 (defun guix-apply-manifest (profile file &optional operation-buffer)
   "Apply manifest from FILE to PROFILE.
-This function has the same meaning as 'guix package --manifest' command.
+This function has the same meaning as `guix package --manifest' command.
 See Info node `(guix) Invoking guix package' for details.
 
 Interactively, use the current profile and prompt for manifest
@@ -189,12 +189,12 @@ FILE.  With a prefix argument, also prompt for PROFILE."
      operation-buffer)))
 
 (defcustom guix-search-paths-buffer-name "*Guix Search Paths*"
-  "Name of a buffer for displaying 'search paths' environment variables."
+  "Name of a buffer for displaying `search paths' environment variables."
   :type 'string
   :group 'guix)
 
 (defun guix-show-search-paths (profiles &optional type)
-  "Display 'search paths' environment variables for PROFILES."
+  "Display `search paths' environment variables for PROFILES."
   (let* ((profiles (mapcar #'guix-package-profile profiles))
          (type (or type "exact"))
          (type-symbol (intern type))
@@ -281,18 +281,18 @@ The function is called with a single argument - a command line string."
   (eshell-send-input))
 
 (defun guix-run-command-in-shell (args)
-  "Execute 'guix ARGS ...' command in a shell buffer."
+  "Execute `guix ARGS ...' command in a shell buffer."
   (funcall guix-run-in-shell-function
            (guix-command-string args)))
 
 (defun guix-run-command-in-repl (args)
-  "Execute 'guix ARGS ...' command in Guix REPL."
+  "Execute `guix ARGS ...' command in Guix REPL."
   (guix-eval-in-repl
    (apply #'guix-make-guile-expression
           'guix-command args)))
 
 (defun guix-command-output (args)
-  "Return string with 'guix ARGS ...' output."
+  "Return string with `guix ARGS ...' output."
   (cl-multiple-value-bind (output error)
       (guix-eval (apply #'guix-make-guile-expression
                         'guix-command-output args))
@@ -301,7 +301,7 @@ The function is called with a single argument - a command line string."
     (read output)))
 
 (defun guix-help-string (&optional commands)
-  "Return string with 'guix COMMANDS ... --help' output."
+  "Return string with `guix COMMANDS ... --help' output."
   (guix-eval-read
    (apply #'guix-make-guile-expression
           'help-string commands)))

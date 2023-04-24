@@ -43,10 +43,10 @@
 (guix-ui-define-entry-type output)
 
 (defcustom guix-package-list-type 'output
-  "Define how to display packages in 'list' buffer.
-Should be a symbol `package' or `output' (if `output', display each
-output on a separate line; if `package', display each package on
-a separate line)."
+  "Define how to display packages in \\+`list' buffer.
+Should be a symbol \\+`package' or \\+`output' (if \\+`output',
+display each output on a separate line; if \\+`package', display
+each package on a separate line)."
   :type '(choice (const :tag "List of packages" package)
                  (const :tag "List of outputs" output))
   :group 'guix-package)
@@ -187,7 +187,7 @@ PACKAGE-SPEC should have the following form: (ID [OUTPUT] ...)."
                                              &key install upgrade remove)
   "Return non-nil if a package operation should be continued.
 Ask a user if needed (see `guix-operation-confirm').
-INSTALL, UPGRADE, REMOVE are 'package action specifications'.
+INSTALL, UPGRADE, REMOVE are `package action specifications'.
 See `guix-process-package-actions' for details."
   (or (null guix-operation-confirm)
       (let* ((entries (guix-ui-get-entries
@@ -382,16 +382,16 @@ ENTRIES is a list of package entries to get info about packages."
 (defface guix-package-info-unknown
   '((t :inherit error))
   "Face used for unknown packages.
-'Unknown' means there are no packages with this name among Guix
-packages.  Perhaps you installed this package in the past, and it
-was renamed later."
+\\+`Unknown' means there are no packages with this name among
+Guix packages.  Perhaps you installed this package in the past,
+and it was renamed later."
   :group 'guix-package-info-faces)
 
 (defface guix-package-info-obsolete
   '((t :inherit font-lock-warning-face))
   "Face used for obsolete packages.
-'Obsolete' means there is a Guix package with this name but with
-a newer version (probably it's time to update)."
+\\+`Obsolete' means there is a Guix package with this name but
+with a newer version (probably it's time to update)."
   :group 'guix-package-info-faces)
 
 (defface guix-package-info-future
@@ -403,10 +403,10 @@ a newer version (probably it's time to update)."
     (((class color) (min-colors 8))
      :foreground "blue"))
   "Face used for packages from the future.
-'From the future' means there is a Guix package with this name
+`From the future' means there is a Guix package with this name
 but with an older version, i.e. the installed package is newer
 than available from Guix!  This is rather unusual, it may happen,
-for example, if you installed a package after 'guix pull' (see
+for example, if you installed a package after `guix pull' (see
 Info node `(guix) Invoking guix pull') and then you removed the
 pulled directory, so Guix searches for packages in its original
 directory with the old package recipes."
@@ -514,7 +514,7 @@ formatted with this string, an action button is inserted.")
 
 (defun guix-package-info-get-entries (profile search-type
                                               &rest search-values)
-  "Return 'package' entries for displaying them in 'info' buffer."
+  "Return \\+`package' entries for displaying them in \\+`info' buffer."
   (guix-eval-read
    (guix-make-guile-expression
     'package/output-sexps
@@ -664,7 +664,7 @@ is newer than the available package recipe for ")
   (insert "."))
 
 (defun guix-package-info-insert-pull-text (name entry)
-  "Insert a message that NAME package was 'guix pull'-ed."
+  "Insert a message that NAME package was `guix pull'-ed."
   (insert "This ")
   (bui-insert-button name 'guix-package-name)
   (insert " package was installed by 'guix pull' command")
@@ -918,7 +918,7 @@ SOURCE is a list of URLs."
       (bui-info-insert-value-indent source 'guix-package-source))))
 
 (defun guix-package-info-redisplay-after-download ()
-  "Redisplay an 'info' buffer after downloading the package source.
+  "Redisplay an \\+`info' buffer after downloading the package source.
 This function is used to hide a \"Download\" button if needed."
   (when (buffer-live-p guix-package-info-download-buffer)
     (with-current-buffer guix-package-info-download-buffer
@@ -1104,7 +1104,7 @@ See `guix-package-info-hidden' face for details."
   :group 'guix-package-list-faces)
 
 (defcustom guix-package-list-generation-marking-enabled nil
-  "If non-nil, allow putting marks in a list with 'generation packages'.
+  "If non-nil, allow putting marks in a list with `generation packages'.
 
 By default this is disabled, because it may be confusing.  For
 example, a package is installed in some generation, so a user can
@@ -1138,7 +1138,7 @@ likely)."
 
 (defun guix-package-list-get-entries (profile search-type
                                               &rest search-values)
-  "Return 'package' entries for displaying them in 'list' buffer."
+  "Return \\+`package' entries for displaying them in \\+`list' buffer."
   (guix-eval-read
    (guix-make-guile-expression
     'package/output-sexps
@@ -1406,7 +1406,7 @@ Interactively, with prefix argument, prompt for NUMBER and ARGS."
 
 (defun guix-output-list-get-entries (profile search-type
                                              &rest search-values)
-  "Return 'output' entries for displaying them in 'list' buffer."
+  "Return \\+`output' entries for displaying them in \\+`list' buffer."
   (guix-eval-read
    (guix-make-guile-expression
     'package/output-sexps
@@ -1614,8 +1614,9 @@ With prefix argument, prompt for PROFILE as well."
 (defun guix-packages-from-system-config-file (file &optional profile)
   "Display Guix packages from the operating system configuration FILE.
 
-Make sure FILE has a proper 'operating-system' declaration.  You
-may check it, for example, by running the following shell command:
+Make sure FILE has a proper \\+`operating-system' declaration.
+You may check it, for example, by running the following shell
+command:
 
   guix system build --dry-run FILE
 
@@ -1628,10 +1629,10 @@ Interactively, prompt for FILE (see also `guix-support-dired').
 With prefix argument, prompt for PROFILE as well.
 
 Note: This command displays only those packages that are placed
-in 'packages' field of the 'operating-system' declaration.  An
-installed system also contains packages installed by
-services (like 'guix' or 'shepherd').  To see all the packages
-installed in a system profile, use
+in \\+`packages' field of the \\+`operating-system' declaration.
+An installed system also contains packages installed by
+services (like \\+`guix' or \\+`shepherd').  To see all the
+packages installed in a system profile, use
 '\\[guix-installed-system-packages]' command."
   (interactive
    (list (guix-read-os-file-name)
@@ -1686,11 +1687,11 @@ Interactively with prefix, prompt for PROFILE."
 ;;;###autoload
 (defun guix-dependent-packages (packages &optional type profile)
   "Display Guix packages that depend on PACKAGES.
-This is similar to 'guix refresh --list-dependent PACKAGES ...'.
+This is similar to `guix refresh --list-dependent PACKAGES ...'.
 See Info node `(guix) Invoking guix refresh' for details.
 
-TYPE should be a symbol `all' or `direct'.  Interactively, prompt
-for it.
+TYPE should be a symbol \\+`all' or \\+`direct'.  Interactively,
+prompt for it.
 
 If PROFILE is nil, use `guix-current-profile'.
 Interactively with prefix, prompt for PROFILE."

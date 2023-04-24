@@ -40,8 +40,8 @@
             (number-of-services . "Services")))
 
 (defun guix-system-get-entries (search-type search-values params)
-  "Receive 'system' entries.
-SEARCH-TYPE may be one of the following symbols: `from-file'."
+  "Receive \\+`system' entries.
+SEARCH-TYPE may be one of the following symbols: \\+`from-file'."
   (let ((sexps (guix-eval-read
                 (guix-make-guile-expression
                  'system-sexps search-type search-values params))))
@@ -76,7 +76,7 @@ SEARCH-TYPE may be one of the following symbols: `from-file'."
             (initrd-modules format (format))))
 
 (defun guix-system-info-get-entries (search-type &rest search-values)
-  "Return 'system' entries for displaying them in 'info' buffer."
+  "Return \\+`system' entries for displaying them in \\+`info' buffer."
   (guix-system-get-entries
    search-type search-values
    (bui-info-displayed-params 'guix-system)))
@@ -111,7 +111,7 @@ SEARCH-TYPE may be one of the following symbols: `from-file'."
 
 ;;;###autoload
 (defun guix-system-from-file (file)
-  "Display info on 'operating-system' declaration from FILE.
+  "Display info on \\+`operating-system' declaration from FILE.
 See `guix-packages-from-system-config-file' for more details on FILE.
 Interactively, prompt for FILE (see also `guix-support-dired')."
   (interactive (list (guix-read-os-file-name)))

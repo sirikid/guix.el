@@ -107,9 +107,9 @@ If you have a slow system, try to increase this time."
   'guix-repl-use-server "0.2")
 
 (defcustom guix-repl-use-server t
-  "If non-nil, start guile with '--listen' argument.
+  "If non-nil, start guile with \\+`--listen' argument.
 This allows to receive information about packages using an
-additional (so called 'internal') REPL while some packages are
+additional (so called \\+`internal') REPL while some packages are
 being installed/removed in the main Guix REPL."
   :type 'boolean
   :group 'guix-repl)
@@ -453,7 +453,7 @@ This function is intended for using in `interactive' forms."
 ;; compatibility (in the past "guix pull" populated
 ;; "~/.config/guix/latest").
 (defun guix-latest-directory ()
-  "Return 'guix pull'-ed directory or nil if it does not exist."
+  "Return `guix pull'-ed directory or nil if it does not exist."
   (let* ((config-dir (or (getenv "XDG_CONFIG_HOME")
                          (expand-file-name "~/.config")))
          (latest-dir (expand-file-name "guix/latest" config-dir)))
@@ -514,7 +514,8 @@ If MODES is nil, use modes for Guix package management."
 
 (defun guix-operation-buffers (&optional modes)
   "Return a list of all buffers with major modes derived from MODES.
-If MODES is nil, return list of all Guix 'list' and 'info' buffers."
+If MODES is nil, return list of all Guix \\+`list' and \\+`info'
+buffers."
   (seq-filter (lambda (it)
                 (guix-operation-buffer? it modes))
               (buffer-list)))

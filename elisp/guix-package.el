@@ -73,7 +73,7 @@
     'package-store-path package-id)))
 
 (defvar guix-after-source-download-hook nil
-  "Hook run after successful performing a 'source-download' operation.")
+  "Hook run after successful performing a \\+`source-download' operation.")
 
 (defun guix-package-source-build-derivation (package-id &optional prompt)
   "Build source derivation of a package PACKAGE-ID.

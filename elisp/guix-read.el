@@ -38,9 +38,9 @@
 These names are used as completions by several commands (for
 example, by '\\[guix-packages-by-name]').
 
-In short: `t' is fast but you'll see unwanted duplicates of
-package names; `nil' is slow (only the first time) but there will
-be no duplicates.  Read further for details.
+In short: t is fast but you'll see unwanted duplicates of package
+names; nil is slow (only the first time) but there will be no
+duplicates.  Read further for details.
 
 To get a list of package names, Emacs-Guix walks through all of
 the Guix packages.  And since Guix may have multiple packages
@@ -48,7 +48,7 @@ with the same name (like `gcc', `linux-libre', etc.), the default
 list of all names contains duplicates (like 6 times of `gcc'
 name).  Removing these duplicates from the list is a time
 consuming operation, so it is not enabled by default, but you can
-enable it by setting this variable to `nil'.
+enable it by setting this variable to nil.
 
 Note that Emacs-Guix caches the list of names when it is used the
 first time, so the potential slowness will happen only during the

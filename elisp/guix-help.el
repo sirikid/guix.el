@@ -47,7 +47,7 @@ If ARG is non-nil (interactively with prefix), show Guix info manual."
   :group 'guix-help)
 
 (defcustom guix-help-doc-column 40
-  "Column at which 'doc' button is inserted."
+  "Column at which \\+`doc' button is inserted."
   :type 'integer
   :group 'guix-help)
 
@@ -185,7 +185,7 @@ COMMAND-NAME is a symbol.
 COMMAND-BUTTON? is a boolean value; it defines whether
 COMMAND-NAME is buttonized or not.
 
-INFO-BUTTON? is a boolean value; it defines whether 'info' button
+INFO-BUTTON? is a boolean value; it defines whether \\+`info' button
 should be displayed or not.")
 
 (defvar guix-help-mode-map
@@ -228,11 +228,11 @@ INFO-NODE is the name passed to `info' function."
    'symbol symbol))
 
 (defun guix-insert-command-button (command)
-  "Insert button to run 'M-x COMMAND'."
+  "Insert button to run COMMAND."
   (let ((command-string (symbol-name command)))
     (bui-insert-button
      command-string 'button
-     'help-echo (format "Call 'M-x %s'" command-string)
+     'help-echo (format "Call %s" command-string)
      'action (lambda (button)
                (call-interactively (button-get button 'command)))
      'command command)))
@@ -254,8 +254,8 @@ INFO-NODE is the name passed to `info' function."
   (guix-goto-index-topic "Command Index" topic))
 
 (defun guix-help-insert-doc-buttons (command &optional info-button?)
-  "Insert 'doc' button for COMMAND at `guix-help-doc-column'.
-If INFO-BUTTON? is non-nil, insert 'info' button as well."
+  "Insert \\+`doc' button for COMMAND at `guix-help-doc-column'.
+If INFO-BUTTON? is non-nil, insert \\+`info' button as well."
   (indent-to guix-help-doc-column 2)
   (guix-insert-doc-button "doc" command)
   (when info-button?

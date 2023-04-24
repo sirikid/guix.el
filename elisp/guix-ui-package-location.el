@@ -33,7 +33,7 @@
 (guix-define-groups package-location)
 
 (defun guix-package-location-get-entries ()
-  "Receive 'package location' entries."
+  "Receive `package location' entries."
   (guix-eval-read "(package-location-sexps)"))
 
 

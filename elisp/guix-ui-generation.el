@@ -41,9 +41,9 @@
 
 (defun guix-generation-get-entries (proc profile search-type
                                          search-values params)
-  "Return 'generation' or 'system-generation' entries.
-PROC is the name of a Scheme procedure (either 'generation-sexps'
-or 'system-generation-sexps')."
+  "Return \\+`generation' or \\+`system-generation' entries.
+PROC is the name of a Scheme procedure (either
+\\+`generation-sexps' or \\+`system-generation-sexps')."
   (apply #'guix-modify-objects
          (guix-eval-read (guix-make-guile-expression
                           proc profile search-type search-values params))
@@ -145,7 +145,7 @@ current profile's GENERATION."
 
 (defun guix-generation-info-get-entries (profile search-type
                                                  &rest search-values)
-  "Return 'generation' entries for displaying them in 'info' buffer."
+  "Return \\+`generation' entries for displaying them in \\+`info' buffer."
   (guix-generation-get-entries
    'generation-sexps
    profile search-type search-values
@@ -161,7 +161,7 @@ current profile's GENERATION."
   (bui-newline))
 
 (defun guix-generation-info-insert-profile-button (file-name)
-  "Insert 'Profile' button for generation FILE-NAME."
+  "Insert \\+`Profile' button for generation FILE-NAME."
   (let ((profile (guix-generation-file-name->profile file-name)))
     (bui-insert-action-button
      "Profile"
@@ -301,7 +301,7 @@ If nothing is marked, return a list with generation at point."
 
 (defun guix-generation-list-get-entries (profile search-type
                                                  &rest search-values)
-  "Return 'generation' entries for displaying them in 'list' buffer."
+  "Return \\+`generation' entries for displaying them in \\+`list' buffer."
   (guix-generation-get-entries
    'generation-sexps
    profile search-type search-values
@@ -332,7 +332,7 @@ VAL is a boolean value."
    'installed))
 
 (defun guix-generation-list-show-search-paths (&optional type)
-  "Display 'search paths' environment variables for the marked generations.
+  "Display `search paths' environment variables for the marked generations.
 If nothing is marked, use generation on the current line."
   (interactive (list (guix-read-search-paths-type)))
   (guix-show-search-paths

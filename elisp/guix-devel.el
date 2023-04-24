@@ -48,7 +48,7 @@
 
 (defface guix-devel-modify-phases-keyword
   '((t :inherit font-lock-preprocessor-face))
-  "Face for a `modify-phases' keyword ('delete', 'replace', etc.)."
+  "Face for a \\+`modify-phases' keyword (\\+`delete', \\+`replace', etc.)."
   :group 'guix-devel-faces)
 
 (defface guix-devel-gexp-symbol
@@ -169,10 +169,10 @@ See Info node `(guix) Invoking guix lint' for details."
 
 (defvar guix-devel-modify-phases-keyword-regexp
   (rx (or "delete" "replace" "add-before" "add-after"))
-  "Regexp for a 'modify-phases' keyword.")
+  "Regexp for a \\+`modify-phases' keyword.")
 
 (defun guix-devel-modify-phases-font-lock-matcher (limit)
-  "Find a 'modify-phases' keyword.
+  "Find a \\+`modify-phases' keyword.
 This function is used as a MATCHER for `font-lock-keywords'."
   (ignore-errors
     (down-list)
@@ -185,7 +185,7 @@ This function is used as a MATCHER for `font-lock-keywords'."
 (defun guix-devel-modify-phases-font-lock-pre ()
   "Skip the next sexp, and return the end point of the current list.
 This function is used as a PRE-MATCH-FORM for `font-lock-keywords'
-to find 'modify-phases' keywords."
+to find \\+`modify-phases' keywords."
   (let ((in-comment? (nth 4 (syntax-ppss))))
     ;; If 'modify-phases' is commented, do not try to search for its
     ;; keywords.
@@ -285,7 +285,7 @@ Each rule should have a form (SYMBOL VALUE).  See `put' for details."
                rules)))
 
 (defun guix-devel-indent-package (state indent-point normal-indent)
-  "Indentation rule for 'package' form."
+  "Indentation rule for \\+`package' form."
   (let* ((package-eol (line-end-position))
          (count (if (and (ignore-errors (down-list) t)
                          (< (point) package-eol)
@@ -295,7 +295,7 @@ Each rule should have a form (SYMBOL VALUE).  See `put' for details."
     (lisp-indent-specform count state indent-point normal-indent)))
 
 (defun guix-devel-indent-modify-phases-keyword (count)
-  "Return indentation function for 'modify-phases' keywords."
+  "Return indentation function for \\+`modify-phases' keywords."
   (lambda (state indent-point normal-indent)
     (when (ignore-errors
             (goto-char (nth 1 state))   ; start of keyword sexp
@@ -444,7 +444,7 @@ When Guix Devel mode is enabled, it highlights various Guix
 keywords.  This mode can be enabled programmatically using hooks,
 like this:
 
-  (add-hook 'scheme-mode-hook 'guix-devel-mode)
+  (add-hook \\='scheme-mode-hook \\='guix-devel-mode)
 
 \\{guix-devel-mode-map}"
   :init-value nil
